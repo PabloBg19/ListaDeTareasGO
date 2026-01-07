@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tareas GO</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .tarea { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
+        .completada { text-decoration: line-through; color: gray; }
+        .btn { padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; font-size: 12px; }
+        .btn-check { background: #28a745; color: white; }
+        .btn-del { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Tareas GO</h1>
+        {{range $index, $tarea := .}}
+        <div class="tarea">
+            <span class="{{if $tarea.Estado}}completada{{end}}">
+                {{$tarea.Nombre}}
+                <br>
+                <small style="color: #888; font-size: 0.8em;">Creada: {{$tarea.Fecha}}</small>
+            </span>
+            <div>
+                <a href="/modificar?id={{$index}}" class="btn btn-check">✓</a>
+                <a href="/borrar?id={{$index}}" class="btn btn-del">x</a>
+            </div>
+        </div>
+        {{end}}
+        <br>
+        <form action="/crear" method="GET">
+            <input type="text" name="nombre" placeholder="Nueva tarea..." required>
+            <button type="submit">Añadir</button>
+        </form>
+    </div>
+</body>
+</html>

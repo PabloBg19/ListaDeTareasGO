@@ -1,0 +1,10 @@
+[
+ {
+  "nombre": "GTA V",
+  "estado": true
+ },
+ {
+  "nombre": "Adoptar perros",
+  "estado": false
+ }
+]
