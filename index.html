@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Gestor Pro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
     <style>
         .completada { text-decoration: line-through; color: #6c757d; }
         body { background-color: #f8f9fa; }
@@ -13,17 +14,33 @@
     </style>
 </head>
 <body class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <p class="mb-0">Hola, <strong>{{.Usuario}}</strong></p>
+        <a href="/salir" class="btn btn-sm btn-outline-secondary">Cerrar Sesión</a>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h1 class="text-center mb-4 text-primary">Mis Tareas 📝</h1>
 
+            <div class="d-flex justify-content-between align-items-center mb-3 text-muted">
+                <div>
+                <span>Total: <strong>{{.Total}}</strong></span>
+                <span class="ms-3">Completadas: <strong class="text-success">{{.Completadas}}</strong></span>
+            </div>
+            
+            {{if gt .Completadas 0}}
+                <a href="/limpiar" class="btn btn-sm btn-link text-danger text-decoration-none">
+                    Limpiar completadas 🧹
+                </a>
+            {{end}}
+            </div>
             <form action="/crear" method="GET" class="input-group mb-4 shadow-sm">
                 <input type="text" name="nombre" class="form-control" placeholder="¿Qué hay que hacer?" required>
                 <button class="btn btn-primary" type="submit">Añadir</button>
             </form>
 
             <div class="list-group shadow-sm">
-                {{range $index, $tarea := .}}
+                {{range $index, $tarea := .Tareas}}
                 <div class="list-group-item d-flex justify-content-between align-items-center card-tarea">
                     <div>
                         <h5 class="mb-0 {{if $tarea.Estado}}completada{{end}}">{{$tarea.Nombre}}</h5>
@@ -35,6 +52,11 @@
                         </a>
                         <a href="/borrar?id={{$index}}" class="btn btn-sm btn-outline-danger">🗑️</a>
                     </div>
+                </div>
+                {{else}}
+                <div class="list-group-item text-center py-5">
+                    <h5 class="text-muted">¡No tienes tareas pendientes! 🎉</h5>
+                    <p class="mb-0">Aprovecha para descansar o añade algo nuevo arriba.</p>
                 </div>
                 {{end}}
             </div>
