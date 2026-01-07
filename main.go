@@ -84,7 +84,15 @@ func main() {
 		plantilla.Execute(w, listaTareas)
 	})
 
-	http.ListenAndServe(":8080", nil)
+	puerto := os.Getenv("PORT")
+	if puerto == "" {
+		puerto = "8080"
+	}
+
+	err := http.ListenAndServe(":"+puerto, nil)
+	if err != nil {
+		fmt.Println("Error al iniciar el servidor:", err)
+	}
 }
 
 func cargarTareas() {
