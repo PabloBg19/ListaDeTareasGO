@@ -57,7 +57,7 @@ func main() {
 		http.Redirect(w, r, "/tareas", http.StatusSeeOther)
 	})
 
-	http.HandleFunc("/modificar", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/completar", func(w http.ResponseWriter, r *http.Request) {
 		idTexto := r.URL.Query().Get("id")
 
 		id, err := strconv.Atoi(idTexto)
